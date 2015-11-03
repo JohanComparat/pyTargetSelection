@@ -1,0 +1,62 @@
+Welcome to the python target selection on decals package
+========================================================
+
+This folder contains the scripts necessary to do TS on DECaLS.
+Written by johan comparat
+Contact : johan.comparat@gmail.com
+
+Environement variables :
+------------------------
+
+$DECALS_DATA_DIR
+$DECALS_RANDOM_DIR
+$PYTS_DIR
+$PYTS_DATA_DIR
+
+../decals 			:	contains the tractor catalogs of DR1
+../decalsDepthMasks	:	contains the depths masks
+../starMasks		:	contains the bright star masks. Currently the mask cover part of stripe 82 that was observed by decals. To be finalized for the complete footprint.
+../decalsRandoms	:	contains randoms points where decals already observed
+../decalsSelections	:	contains the selection done with this package
+../decals_cutouts	:	contains cutouts around the targets (work in progress)
+
+
+
+Library :
+---------
+
+lib_select_ELG.py
+
+contains the different functions necessary to do a selection on the DECaLS photometric survey:
+ * getCompleteness 	: get the completeness values for a list of ra and dec in a brick
+ * selectELG_240 	: selects the ELGs from a brick to a completeness limit in grz with the fiducial 240 algorithm 
+ * selectRandoms	: selects the randoms from a brick to a completeness limit in grz
+ * selectELG_280 	: selects the ELGs from a brick to a completeness limit in grz with the new 280 algorithm (still under tests)
+ * selectLRG_DESI	: selects LRG-CMASS using grzW1. Test for DESI by Ginevra Favole.
+
+
+Scripts :
+---------
+
+* make_ELG_240_catalog.py :: constructs the ELG catalog selected with the ELG 240 algorithm.
+* concatenate_ELG_240_catalog.sh :: creates the master ELG catalog from the bricks catalogs.
+
+* maskELGcatalog.py :: adds a column to the ELG catalog that tells if a target is included or not in a mangle mask. Used to mask for bright stars
+
+* make_GeneralRandom_Catalog.py :: produced the randoms on a brick per brick basis : ../decalsRandoms  To be run only once at each data release.
+
+Dependencies :
+==============
+
+stilts.jar 	: 	a java library to handle large fits catalogs rapidly
+
+MASKING :
+=========
+the mask flag takes different values corresponding to the
+different masks applied :
+N= 1  stands for mask= ../starMasks/tycho2mask-0Vmag10.pol
+N= 2  stands for mask= ../starMasks/tycho2mask-10Vmag11.pol
+N= 3  stands for mask= ../starMasks/tycho2mask-115Vmag12.pol
+N= 4  stands for mask= ../starMasks/tycho2mask-11Vmag115.pol
+
+ 
